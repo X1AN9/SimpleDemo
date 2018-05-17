@@ -7,7 +7,7 @@ class FormController extends Controller {
 		$shop_id = $_GET['id'];
         $num = $_GET['num'];
 
-
+	print_r($num);
         // print_r($shop_id);
         // print_r($num);
         // print_r($_POST['number']);
