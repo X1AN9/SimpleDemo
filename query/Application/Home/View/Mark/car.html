@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<title>商品订单</title>
+		<script src="__PUBLIC__/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="__PUBLIC__/js/shopping.js"></script>
+
+		<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/base.css" />
+		<link type="text/css" rel="stylesheet" href="__PUBLIC__/css/module.css" />
+		<link rel="stylesheet" href="__PUBLIC__/css/weui.min.css">
+		<link rel="stylesheet" href="__PUBLIC__/css/jquery-weui.css">
+		<style>
+			@media (min-width: 300px) {
+				.header {
+					display: none
+				}
+				.header1 {
+					display: inline-block;
+				}
+			}
+			
+			@media (min-width: 900px) {
+				.header {
+					display: inline-block;
+				}
+				.header1 {
+					display: none
+				}
+			}
+			
+			#id {
+				display: none;
+			}
+			
+			.del-shop {
+				/*display: none;*/
+			}
+			
+			.num {
+				display: none;
+			}
+			
+			#goods_id {
+				display: none;
+			}
+			
+			#shuliang {
+				display: none;
+			}
+			.head-img img{
+				float: right;
+				width: 48px;
+				height: 48px;
+				margin-left: 495px;
+			}
+			.phone-img img{
+				position:fixed;right: 5px;
+				width: 36px;
+				height: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<!--头部开始-->
+		<div class="header" style="margin:20px 0">
+			<img src="__PUBLIC__/img/yuxing3.0.png" height="40" alt="">
+			<h2 style="position:absolute;top:15px;left:50%;margin-left:-56px">订单管理</h2>
+			<a href="{:U("Form/query")}" class="head-img">
+				<img src="__PUBLIC__/img/search-yellow.png"/>
+			</a>
+		</div>
+		<div class="header1">
+			<!-- <img src="__PUBLIC__/img/yuxing3.0.png" height="40" alt=""> -->
+			<h2>订单管理</h2>
+			<a href="#" class="back" onclick="history.go(-1)"><span></span></a>
+			<a href="{:U("Form/query")}" class="phone-img">
+				<img src="__PUBLIC__/img/search-yellow.png"/>
+			</a>
+		</div>
+		<!--头部结束-->
+
+		<!--商品详情-->
+		<div class="shopping">
+			<foreach name="sp" item="sp1">
+				<div class="shop-group-item">
+					<div class="shop-name">
+						<input type="checkbox" class="check goods-check shopCheck">
+						<h4 style="padding-left:20px;">
+							<a href="#">
+								<foreach name="gs" item="ghs">
+								<if condition='$ghs[id] eq $sp1[0][shop_gonghuoshang]'>
+									{$ghs.name}
+								</if>
+								</foreach>
+							</a>
+						</h4>
+					</div>
+					<input type="text" id="shuliang" value="" />
+					<input type="text" id="goods_id" value="" />
+					<foreach name="sp1" item="sp2">
+					<ul>
+						<foreach name="sp2.cp" item="sp3">
+							<li data="shop-info-{$sp1[0]['shop_id']}">
+								<div class="shop-info">
+									<input type="checkbox" class="check goods-check goodsCheck" value="{$sp3.shop_id}">
+									<input type="text" id="id" data-hq='data-hq' value="{$sp3.shop_id}" />
+									<div class="shop-info-img">
+										<a href="#"><img src="__UPLOAD__/{$sp3.shop_img}" /></a>
+									</div>
+									<div class="shop-info-text">
+										<h3>{$sp3.shop_name}</h3>
+										<div class="shop-brief">
+											<span>规格:{$sp3.shop_c}x{$sp3.shop_w}x{$sp3.shop_h}cm</span>
+										</div>
+										<div class="shop-price">
+											<div class="shop-pices">￥<b class="price">{$sp3.shop_price}</b></div>
+											<div class="shop-arithmetic">
+												<a href="javascript:;" class="minus ssss" datafldjian="{$sp3.shop_id}">-</a>
+												<input type="text" class="num" name="" datafld="{$sp3.shop_id}" value="1" />
+												<a href="javascript:;" class="plus ssss" datafldjian="{$sp3.shop_id}">+</a>
+											</div>
+											<span class="fa fa-trash-o del" style="cursor: pointer;font-size:14px;color:#888"><a href='{:U("Mark/delcar")}?shop_id={$sp3.shop_id}'>删除</a></span>
+										</div>
+									</div>
+								</div>
+							</li>
+						</foreach>
+					</ul>
+					</foreach>
+					<div class="shopPrice">
+						本店总计：￥<span class="shop-total-amount ShopTotal" style="padding-right:20px">0.00</span>
+						<!--a href='{:U('Mark/form')}' class="settlement">{$sp1[0]['shop_gonghuoshang']}下单</a-->
+						<a class="settlement" data="{$sp3.shop_id}" data-shop=" {$sp1[0]['shop_id']}">下单</a>
+					</div>
+				</div>
+			</foreach>
+		</div>
+
+		<!--总价结算-->
+		<!-- <div class="payment-bar">
+			<div class="all-checkbox"><input type="checkbox" class="check goods-check" id="AllCheck">全选</div>
+			<div class="shop-total">
+				<strong>总价：<i class="total" id="AllTotal">0.00</i></strong>
+				<span>减免：123.00</span>
+			</div>
+			<a href="#" class="settlement">结算</a>
+		</div> -->
+	</body>
+	
+	<script src="__PUBLIC__/js/jquery-2.1.4.js"></script>
+	<script src="__PUBLIC__/js/jquery-weui.js"></script>
+	
+	<script type="text/javascript">
+		$('.shopCheck').click(function() {
+			if(!$(this).parents().nextAll('ul').children('li').children('.shop-info').children('.goodsCheck').hasClass("weui-visible")) {
+				$(this).parents().nextAll('ul').children('li').children('.shop-info').children('.goodsCheck').addClass("weui-visible");
+			} else {
+				
+				
+				$(this).parents().nextAll('ul').children('li').children('.shop-info').children('.goodsCheck').removeClass("weui-visible");
+			}
+			
+		})
+		$('.goodsCheck').click(function() {
+
+			if(!$(this).hasClass("weui-visible")) {
+				$(this).addClass("weui-visible");
+			} else {
+				$(this).removeClass("weui-visible");
+			}
+
+		})
+
+		$('.settlement').click(function() {
+
+			var selected_sucaihuo = "";
+			var s = "";
+
+			$('.weui-visible').each(function() {
+
+				selected_sucaihuo += $(this).val() + ",";
+				s +=$(this).nextAll('.shop-info-text').children('.shop-price').children('.shop-arithmetic').children('.num').val() + ",";
+
+			})
+
+			//alert('========' + selected_sucaihuo);
+			$("#goods_id").val(selected_sucaihuo);
+			$("#shuliang").val(s);
+			
+			if(s!=""&&selected_sucaihuo!=""){
+				location.href = '{:U("Form/index")}?id=' + selected_sucaihuo + '&num=' + s;
+			}else{
+				alert("你还未选择下单商品!")
+//				$.toast('请选择商品!');
+			}
+		})
+	</script>
+	<!--<script language="javascript">
+		var d = new Date()
+		var vYear = d.getFullYear()
+		var vMon = d.getMonth() + 1
+		var vDay = d.getDate()
+		var h = d.getHours();
+		var m = d.getMinutes();
+		s = vYear + '-' + (vMon < 10 ? "0" + vMon : vMon) + '-' + (vDay < 10 ? "0" + vDay : vDay) + ' ' + (h < 10 ? "0" + h : h) + ':' + (m < 10 ? "0" + m : m);
+	</script>-->
+
+</html>

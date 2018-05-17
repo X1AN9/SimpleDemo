@@ -1,0 +1,339 @@
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+		<link rel="stylesheet" href="/query/Public/css/weui.min.css">
+		<link rel="stylesheet" href="/query/Public/css/jquery-weui.css">
+		<title>单号查询</title>
+		<style type="text/css" media="screen">
+			body {
+				background-color: #ffffff;
+				margin: 0;
+			}
+			
+			* {
+				padding: 0;
+				margin: 0
+			}
+			
+			body,
+			input,
+			button {
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			}
+			
+			.container {
+				margin: 0 auto;
+				max-width: 700px;
+				text-align: center;
+			}
+			
+			.mt {
+				margin-top: 100px
+			}
+			
+			a {
+				color: #166ef3;
+				text-decoration: none;
+				font-size: 16px;
+				font-weight: bold;
+			}
+			
+			a:hover {
+				text-decoration: underline;
+			}
+			
+			h3 {
+				color: #666;
+			}
+			
+			ul {
+				list-style: none;
+				padding: 25px 0;
+			}
+			
+			li {
+				display: inline;
+				margin: 10px 50px 10px 0px;
+			}
+			
+			input[type=text],
+			input[type=password] {
+				font-size: 13px;
+				min-height: 32px;
+				margin: 0;
+				padding: 7px 8px;
+				outline: none;
+				color: #333;
+				background-color: #fff;
+				background-repeat: no-repeat;
+				background-position: right center;
+				border: 1px solid #ccc;
+				border-radius: 3px;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+				transition: all 0.15s ease-in;
+				-webkit-transition: all 0.15s ease-in 0;
+				vertical-align: middle;
+			}
+			
+			.button,
+			.add {
+				position: relative;
+				display: inline-block;
+				margin: 0;
+				padding: 6px 15px;
+				font-size: 13px;
+				font-weight: bold;
+				color: #333;
+				white-space: nowrap;
+				background-color: #317EF3;
+				color: #ffffff;
+				border: 0;
+				border-radius: 3px;
+				cursor: pointer;
+				box-sizing: border-box;
+			}
+			
+			.fixed {
+				width: 65px;
+				margin: 0 auto;
+				height: 320px;
+				position: fixed;
+				right: 20px;
+				bottom: 27%;
+				text-align: center;
+				font-size: 14px
+			}
+			
+			.fixed img {
+				width: 32px;
+				height: 32px;
+				margin-top: 15px
+			}
+			
+			.fixed p {
+				margin-top: 8px;
+				font-size: 12px
+			}
+			
+			.add {
+				background: red
+			}
+			
+			.add:hover,
+			.add:active {
+				background-position: 0 -15px;
+			}
+			
+			.add:active {
+				background-color: red;
+			}
+			
+			.add:focus,
+			input[type=text]:focus,
+			input[type=password]:focus {
+				outline: none;
+			}
+			
+			label[for=search] {
+				display: block;
+				text-align: left;
+			}
+			
+			#search label {
+				font-weight: 200;
+				padding: 5px 0;
+			}
+			
+			#tab {
+				border: 1px;
+				width: 100%
+			}
+			
+			table {
+				border-collapse: separate;
+				border-spacing: 10px;
+			}
+			
+			table tr {
+				height: 100px;
+				cursor: pointer;
+			}
+			
+			@media (min-width: 300px) {
+				.mod_aside_v2 {
+					display: block;
+				}
+				.fixed {
+					display: none
+				}
+				.mt {
+					margin-top: 50px
+				}
+				#search input[type=text] {
+					font-size: 18px;
+					width: 94%;
+					height: 37px;
+					float: left;
+					margin-top: 5px;
+					margin-left: 3%
+				}
+				#search .button {
+					position: relative;
+					left: 3%;
+					padding: 15px;
+					width: 94%;
+					float: left;
+					border-radius: 3px;
+					margin-top: 20px
+				}
+				.select {
+					position: relative;
+					width: 35%;
+					height: 37px;
+					float: left;
+					margin-left: 2px;
+					z-index: 554;
+					border: 1px solid #ccc;
+					z-index: 9;
+					margin-top: 5px
+				}
+			}
+			
+			@media (min-width: 500px) {
+				.mod_aside_v2 {
+					display: block;
+				}
+				#search input[type=text] {
+					font-size: 18px;
+					height: 37px;
+					width: 94%;
+					float: left;
+					margin-left: 3%;
+				}
+				.mt {
+					margin-top: 30px
+				}
+				#search .button {
+					position: static;
+					padding: 10px;
+					width: 94%;
+					font-size: 16px !important;
+					float: left;
+					margin-left: 3%;
+				}
+				.select {
+					width: 30%;
+					height: 37px;
+					float: left;
+					z-index: 9
+				}
+			}
+			
+			@media (min-width: 900px) {
+				.mod_aside_v2 {
+					display: none;
+				}
+				.fixed {
+					display: block;
+				}
+				#search input[type=text] {
+					font-size: 18px;
+					width: 65%;
+					float: left;
+					margin-top: 5px;
+					margin-left: 1px;
+				}
+				.mt {
+					margin-top: 200px
+				}
+				#search .button {
+					position: static;
+					padding: 8.5px 10px;
+					width: 19%;
+					float: left;
+					border-radius: 5px;
+					margin-left: -3%;
+					margin-top: 5px
+				}
+				.select {
+					width: 20%;
+					height: 37px;
+					float: left;
+					margin-right: -1px;
+					margin-top: 5px
+				}
+			}
+			
+			.div-p1 {
+				float: left;
+			}
+			
+			.p1 {
+				float: left;
+			}
+			
+			.p2 {
+				float: left;
+			}
+			
+			.p3 {
+				float: left;
+			}
+			
+			.p4 {
+				float: left;
+			}
+			
+			.p5-span {
+				color: red;
+			}
+			
+			.div-p2 {
+				margin-top: 30px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="container mt">
+			<!-- <img src="/query/Public/img/jushi.png" alt=""> -->
+			<h1>单号查询</h1>
+			<div id="search" style="margin-top:35px">
+				<form action="<?php echo U('Form/querySid');?>" method="post">
+					<!-- <label for="search"></label> -->
+					<div style="overflow:hidden">
+						<input type="text" name="sid" id="txt" class="txt" placeholder="请输入" autocomplete="off" value="<?php echo $_POST[q];?>">
+						<input class="button btn-query" type="submit" value="搜索">
+						<input class="button btn-back" type="button" value="返回">
+						<!-- <input class="add" type="button" value="添加"> -->
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- <div style="text-align:center;margin:100px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+</div> -->
+	</body>
+	<script src="/query/Public/js/jquery-2.1.4.js"></script>
+	<script src="/query/Public/js/jquery-weui.js"></script>
+	<script type="text/javascript">
+		$(".btn-query").click(function() {
+			if($(".txt").val() == "") {
+				alert("搜索内容不能为空");
+//				$.toast('内容不能为空!');
+				return false;
+			}
+		});
+		$('.btn-back').click(function(){
+			history.go(-1);
+		})
+	</script>
+
+</html>
